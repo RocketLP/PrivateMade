@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登录界面</title>
+    <link rel="stylesheet" type="text/css" href="css/start.css"/>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css"/>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        #container{
+            width: 300px;
+            height: 350px;
+            background-color: white;
+            margin: 0 auto;
+            position: relative;
+            top: 180px;
+            border: 1px solid #1E90FF;
+            border-radius: 10px;
+        }
+
+        #content-top-line{
+            width: 100%;
+            height: 10px;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            background-color: #1E90FF;
+        }
+
+        #content-top{
+            width: 100%;
+            height: 80px;
+            background-image: url("img/photo1.png");
+            background-repeat: no-repeat;
+            background-position: center center;
+        }
+
+        .container{
+            position: relative;
+            top: 50px;
+        }
+
+        input{
+            text-align: center;
+        }
+
+        .btnLogin{
+            width: 100%;
+            background-color: #007bff;
+            border-color: #007bff;
+            display: inline-block;
+            font-weight: 400;
+            color: #212529;
+            text-align: center;
+            vertical-align: middle;
+            cursor: pointer;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            padding: 0.375rem 0.75rem;
+            font-size: 1rem;
+            line-height: 1.5;
+            border-radius: 0.25rem;
+            transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+<div id="container">
+    <div id="content-top-line"></div>
+    <div id="content-top"></div>
+    <div class="container">
+        <form>
+            <div class="form-group">
+                <input type="email" class="form-control" id="account" placeholder="会员名">
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control" id="password" placeholder="密码">
+            </div>
+            <div class="form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" type="checkbox"> 记住密码
+                </label>
+            </div>
+            <button type="button" class="btnLogin btn-primary" id="btnLogin">登录</button>
+        </form>
+    </div>
+</div>
+</body>
+<script src="js/jquery-2.1.1.min.js" type="text/javascript"></script>
+<script src="js/jquery.gradientify.js" type="text/javascript"></script>
+<script src="js/layer/layer.js" type="text/javascript"></script>
+<script type="text/javascript">
+    $(function () {
+        $("body").gradientify({
+            gradients: [
+                {start: [49, 76, 172], stop: [242, 159, 191]},
+                {start: [255, 103, 69], stop: [240, 154, 241]},
+                {start: [33, 229, 241], stop: [235, 236, 117]}
+            ]
+        });
+        $('#btnLogin').click(function () {
+            var account=$('#account').val();
+            var password=$('#password').val();
+            $.post('queryByAccount',{mAccount:account},function (data) {
+                if (data.code!=200){
+                    if (data.result.mrole==1){
+                        if (password==data.result.mpassword){
+                            layer.msg('登录成功！',{icon:1,time:1000},function () {
+                                location.href='admin.html';
+                            });
+                        } else {
+                            layer.msg('密码错误！');
+                        }
+                    } else {
+                        if (password==data.result.mpassword){
+                            layer.msg('登录成功！',{icon:1,time:1000},function () {
+                                location.href='boss.html?mid='+data.result.mid;
+                            });
+                        } else {
+                            layer.msg('密码错误！');
+                        }
+                    }
+                } else {
+                    layer.msg('账号不存在！');
+                }
+            },'json');
+        })
+    });
+</script>
+</html>

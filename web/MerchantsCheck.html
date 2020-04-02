@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>商家审核</title>
+    <link type="text/css" rel="stylesheet" href="css/bootstrap.css">
+    <style type="text/css">
+        a{
+            cursor: default;
+            text-decoration-line: none;
+            color: #1E90FF;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>商家编号</th>
+            <th>商家名</th>
+            <th>商家联系电话</th>
+            <th>商家工商注册号</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
+</body>
+<script type="text/javascript" src="js/jquery-3.2.1.js"></script>
+<script type="text/javascript" src="js/layer/layer.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $.post('queryNoCheckedMerchants',function (data) {
+            if (data.code==200){
+                $.each(data.result,function (index,obj) {
+                    var tr=$('<tr></tr>');
+                    var td1=$('<td></td>').text(obj.mcid);
+                    var td2=$('<td></td>').text(obj.mcname);
+                    var td3=$('<td></td>').text(obj.mcphone);
+                    var td4=$('<td></td>').text(obj.mclicense);
+                    var td5=$('<td></td>');
+                    var reject=$('<a href="#" onclick="reject('+obj.mcid+',this)"></a>').text('驳回');
+                    var empty=$('<span></span>').html('&nbsp&nbsp&nbsp&nbsp');
+                    var pass=$('<a href="#" onclick="pass('+obj.mcid+',this)"></a>').text('通过');
+                    td5.append(reject).append(empty).append(pass);
+                    tr.append(td1).append(td2).append(td3).append(td4).append(td5);
+                    $('tbody').append(tr);
+                })
+            }else {
+                var tr=$('<tr></tr>');
+                var td1=$('<td></td>').text('没有相关信息');
+            }
+        },'json');
+    })
+    function reject(mcid,obj) {
+        layer.confirm('确认驳回',{icon:3,time:5000},function (index) {
+            $.post('reject',{mcid:mcid},function (data) {
+                if (data.code==200){
+                    layer.msg(data.msg,{icon:1,time:1000},function () {
+                        $(obj).parent().parent().remove();
+                    });
+                }else {
+                    layer.msg(data.msg);
+                }
+            },'json');
+            layer.close(index);
+        })
+    }
+    function pass(mcid,obj) {
+        layer.confirm('确认通过',{icon:3,time:5000},function (index) {
+            $.post('pass',{mcid:mcid},function (data) {
+                if (data.code==200){
+                    layer.msg(data.msg,{icon:1,time:1000},function () {
+                        $(obj).parent().parent().remove();
+                    });
+                }else {
+                    layer.msg(data.msg);
+                }
+            },'json');
+            layer.close(index);
+        })
+    }
+</script>
+</html>

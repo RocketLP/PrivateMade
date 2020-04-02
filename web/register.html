@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>注册界面</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="css/gloab.css" rel="stylesheet" type="text/css">
+    <link href="css/index.css" rel="stylesheet" type="text/css">
+    <style>
+        #emptyleft {
+            display: inline-block;
+            width: 60px;
+        }
+
+        #emptyright {
+            display: inline-block;
+            width: 80px;
+        }
+
+        .empty {
+            display: inline-block;
+            width: 10px;
+        }
+
+        .showpwd {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            background: url("img/hidePwd.png") no-repeat center center;
+            background-size: 16px 16px;
+            position: absolute;
+            top: 8px;
+            right: 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div class="login-box f-mt10 f-pb50">
+    <div class="main bgf">
+        <div class="reg-box-pan display-inline">
+            <div class="reg-box" id="verifyCheck" style="margin-top:20px;">
+                <div class="part1">
+                    <div class="item col-xs-12">
+                        <span class="intelligent-label f-fl"><b class="ftx04">*</b>用户名：</span>
+                        <div class="f-fl item-ifo">
+                            <input name="mAccount" type="text" maxlength="20" class="txt03 f-r3 required" tabindex="1"
+                                   data-valid="isNonEmpty||between:3-20||isUname"
+                                   data-error="用户名不能为空||用户名长度3-20位||只能输入中文、字母、数字、下划线，且以中文或字母开头" id="mAccount"/> <span
+                                class="ie8 icon-close close hide"></span>
+                            <label class="icon-sucessfill blank hide"></label>
+                            <label class="focus"><span id="accountSpan">3-20位，中文、字母、数字、下划线的组合，以中文或字母开头</span></label>
+                            <label class="focus valid"></label>
+                        </div>
+                    </div>
+                    <div class="item col-xs-12">
+                        <span class="intelligent-label f-fl"><b class="ftx04">*</b>手机号：</span>
+                        <div class="f-fl item-ifo">
+                            <input name="mPhone" type="text" class="txt03 f-r3 required" keycodes="tel" tabindex="2"
+                                   data-valid="isNonEmpty||isPhone" data-error="手机号码不能为空||手机号码格式不正确" maxlength="11"
+                                   id="mPhone"/>
+                            <span class="ie8 icon-close close hide"></span>
+                            <label class="icon-sucessfill blank hide"></label>
+                            <label class="focus"><span id="phoneSpan">请填写11位有效的手机号码</span></label>
+                            <label class="focus valid"></label>
+                        </div>
+                    </div>
+                    <div class="item col-xs-12">
+                        <span class="intelligent-label f-fl"><b class="ftx04">*</b>密码：</span>
+                        <div class="f-fl item-ifo">
+                            <input type="password" id="mPassword"
+                                   class="txt03 f-r3 required" tabindex="3"
+                                   style="ime-mode:disabled;"/>
+                            <span class="ie8 icon-close close hide" style="right:55px"></span>
+                            <span class="showpwd" data-eye="password"></span>
+                            <label class="icon-sucessfill blank hide"></label>
+                            <label class="focus"><span id="passwordSpan">6-20位英文（区分大小写）、数字、字符的组合</span></label>
+                            <label class="focus valid"></label>
+                            <span class="clearfix"></span>
+                            <label class="strength">
+                                <span class="f-fl f-size12">安全程度：</span>
+                                <b><i>弱</i><i>中</i><i>强</i></b>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="item col-xs-12">
+                        <span class="intelligent-label f-fl"><b class="ftx04">*</b>确认密码：</span>
+                        <div class="f-fl item-ifo">
+                            <input type="password" class="txt03 f-r3 required" tabindex="4"
+                                   style="ime-mode:disabled;" id="rePassword"/>
+                            <span class="ie8 icon-close close hide" style="right:55px"></span>
+                            <span class="showpwd" data-eye="rePassword"></span>
+                            <label class="icon-sucessfill blank hide"></label>
+                            <label class="focus"><span id="rePasswordSpan">请再输入一遍上面的密码</span></label>
+                            <label class="focus valid"></label>
+                        </div>
+                    </div>
+                    <div class="item col-xs-12">
+                        <span class="intelligent-label f-fl"><b class="ftx04">*</b>邮箱：</span>
+                        <div class="f-fl item-ifo">
+                            <input name="mEmail" id="mEmail" type="text" maxlength="20" class="txt03 f-r3 required"
+                                   tabindex="1"/> <span
+                                class="ie8 icon-close close hide"></span>
+                            <label class="icon-sucessfill blank hide"></label>
+                            <label class="focus"><span id="emailSpan">用户名@主机名.域名 例如：email@mail.com</span></label>
+                            <label class="focus valid"></label>
+                        </div>
+                    </div>
+                    <div class="item col-xs-12">
+                        <span class="intelligent-label f-fl"><b class="ftx04">*</b>性别：</span>
+                        <div class="f-fl item-ifo">
+                            <p id="emptyleft"></p><input type="radio" name="gender" value="1"/>男 <p id="emptyright"></p>
+                            <input type="radio" name="gender" value="2"/>女
+                            <span class="ie8 icon-close close hide"></span>
+                        </div>
+                    </div>
+                    <div class="item col-xs-12">
+                        <span class="intelligent-label f-fl"><b class="ftx04">*</b>生日：</span>
+                        <div class="f-fl item-ifo">
+                            <select id="year" onchange="getDays()"></select>
+                            <p class="empty"></p><span>年</span>
+                            <p class="empty"></p><select
+                                id="month" onchange="getDays()"></select>
+                            <p class="empty"></p><span>月</span>
+                            <p class="empty"></p><select
+                                id="day"></select>
+                            <p class="empty"></p><span>日</span>
+                            <span class="ie8 icon-close close hide"></span>
+                        </div>
+                    </div>
+                    <div class="item col-xs-12" style="height:auto">
+                        <span class="intelligent-label f-fl">&nbsp;</span>
+                        <p class="f-size14 required" data-valid="isChecked" data-error="请先同意条款">
+                            <input type="checkbox" checked/><a href="javascript:showoutc();" class="f-ml5">我已阅读并同意条款</a>
+                        </p>
+                        <label class="focus valid"></label>
+                    </div>
+                    <div class="item col-xs-12">
+                        <span class="intelligent-label f-fl">&nbsp;</span>
+                        <div class="f-fl item-ifo">
+                            <button class="btn btn-blue f-r3" id="btnRegister">注册</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="m-sPopBg" style="z-index:998;"></div>
+<div class="m-sPopCon regcon">
+    <div class="m-sPopTitle"><strong>服务协议条款</strong><b id="sPopClose" class="m-sPopClose" onClick="closeClause()">×</b>
+    </div>
+    <div class="apply_up_content">
+    	<pre class="f-r0">
+		<strong>同意以下服务条款，提交注册信息</strong>
+        </pre>
+    </div>
+    <center><a class="btn btn-blue btn-lg f-size12 b-b0 b-l0 b-t0 b-r0 f-pl50 f-pr50 f-r3"
+               href="javascript:closeClause();">已阅读并同意此条款</a></center>
+</div>
+</body>
+<script src="js/jquery-3.2.1.js" type="text/javascript"></script>
+<script src="js/layer/layer.js" type="text/javascript"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var date = new Date();
+        //创建日期对象
+        var year = date.getFullYear();
+        //获取当前年份
+        for (var i = year - 100; i <= year; i++) {
+            //在id为year的selector附加option选项
+            $("#year").append("<option value=\"" + i + "\">" + i + "</option>");
+            //append函数附加html到元素结尾处
+        }
+        for (var i = 1; i <= 12; i++) {
+            $("#month").append("<option value=\"" + i + "\">" + i + "</option>");
+            //为Id为month的selector附加option选项
+        }
+        getDays($("#month").val(), $("#year").val());
+        //执行函数getDays()， 传参year和month， 初始化day selector
+        var account;
+        var password;
+        var email;
+        var phone;
+        var isAccountRight = false;
+        var isPasswordRight = false;
+        var isPhoneRight = false;
+        var isEmailRight = false;
+        var isRePassword = false;
+        $('#mAccount').blur(function () {
+            account = $("#mAccount").val();
+            $.post('queryByAccount',{
+                mAccount:account
+            },function (data) {
+                if (data.code==200){
+                    var regAccount = /^[a-zA-Z][a-zA-Z0-9_]{4,15}$/;
+                    if (regAccount.test(account)) {
+                        $('#accountSpan').text("格式正确");
+                        $('#accountSpan').css('color', 'green');
+                        isAccountRight = true;
+                    } else {
+                        $('#accountSpan').text("格式错误");
+                        $('#accountSpan').css('color', 'red');
+                        isAccountRight = false;
+                    }
+                } else {
+                    layer.msg(data.msg);
+                }
+            },"json");
+        })
+
+        $('#mPassword').blur(function () {
+            password = $("#mPassword").val();
+            var regPassword = /^[a-zA-Z]\w{5,17}$/;
+            if (regPassword.test(password)) {
+                $('#passwordSpan').text("格式正确");
+                $('#passwordSpan').css('color', 'green');
+                isPasswordRight = true;
+            } else {
+                $('#passwordSpan').text("格式错误");
+                $('#passwordSpan').css('color', 'red');
+                isPasswordRight = false;
+            }
+        })
+        $('#rePassword').blur(function () {
+            var rePassword = $('#rePassword').val();
+            if (rePassword==password) {
+                $('#rePasswordSpan').text("一致");
+                $('#rePasswordSpan').css('color', 'green');
+                isRePassword = true;
+            } else {
+                $('#rePasswordSpan').text("不一致");
+                $('#rePasswordSpan').css('color', 'red');
+                isRePassword = false;
+            }
+        })
+        $('#mPhone').blur(function () {
+            phone = $('#mPhone').val();
+            var regPhone = /^1[3|4|5|6|7|8|9]\d{9}$|(^09\d{8}$)/;
+            if (regPhone.test(phone)) {
+                $('#phoneSpan').text("格式正确");
+                $('#phoneSpan').css('color', 'green');
+                isPhoneRight = true;
+            } else {
+                $('#phoneSpan').text("格式错误");
+                $('#phoneSpan').css('color', 'red');
+                isPhoneRight = false;
+            }
+        })
+        $('#mEmail').blur(function () {
+            email = $('#mEmail').val();
+            var regEmail = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
+            if (regEmail.test(email)) {
+                $('#emailSpan').text("格式正确");
+                $('#emailSpan').css('color', 'green');
+                isEmailRight = true;
+            } else {
+                $('#emailSpan').text("格式错误");
+                $('#emailSpan').css('color', 'red');
+                isEmailRight = false;
+            }
+        })
+
+        $("#btnRegister").click(function () {
+            var radio = $('input[name="gender"]:checked').val();
+            var gender;
+            if (radio == 1) {
+                gender = '男';
+            } else {
+                gender = '女';
+            }
+            var year = $('#year').val();
+            var month = $('#month').val();
+            var day = $('#day').val();
+            var brithday = day + '-' + month + '月-' + year;
+            if (typeof (gender) == "undefined") {
+                layer.msg('性别未选择');
+            } else {
+                $.post('queryByAccount',{
+                    mAccount:account
+                },function (data) {
+                    if (data.code==200){
+                        var regAccount = /^[a-zA-Z][a-zA-Z0-9_]{4,15}$/;
+                        if (regAccount.test(account)) {
+                            $('#accountSpan').text("格式正确");
+                            $('#accountSpan').css('color', 'green');
+                            isAccountRight = true;
+                            if (isAccountRight == true && isPasswordRight == true && isEmailRight == true && isPhoneRight == true && isRePassword == true) {
+                                $.post('register', {
+                                    mAccount: account,
+                                    mPassword: password,
+                                    mPhone: phone,
+                                    mEmail: email,
+                                    mGender: gender,
+                                    mBrithday: brithday
+                                }, function (data) {
+                                    if (data.code==200){
+                                        layer.msg(data.msg);
+                                    }else {
+                                        layer.msg(data.msg,{icon:1,time:1000},function () {
+                                            location.href="goto.html";
+                                        });
+                                    }
+                                }, 'json');
+                            } else {
+                                layer.msg('信息填写有误');
+                            }
+                        } else {
+                            $('#accountSpan').text("格式错误");
+                            $('#accountSpan').css('color', 'red');
+                            isAccountRight = false;
+                        }
+                    } else {
+                        layer.msg(data.msg);
+                    }
+                },"json");
+            }
+        })
+    });
+
+    function getDaysInMonth(month, year) {
+        //年月对应的日数算法
+        var days;
+        if (month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12) {
+            days = 31;
+            //固定31
+        } else if (month == 4 || month == 6 || month == 9 || month == 11) {
+            days = 30;
+            //固定30
+        } else {
+            if ((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0)) {
+                //排除百年，每四年一闰；每四百年一闰；
+                days = 29;
+                //闰年29
+            } else {
+                days = 28;
+                //平年28
+            }
+        }
+        return days;
+        //返回该年月的日数
+    }
+
+    function getDays() {
+        var year = $("#year").val();
+        //year selector οnchange="getDays()"动态获取用户选择的year值
+        var month = $("#month").val();
+        //month selector οnchange="getDays()"动态获取用户选择的month值
+        var days = getDaysInMonth(month, year); //调用算法函数计算对应年月的日数
+        $("#day").empty();
+        //调用empty()函数清空day selector options，然后再append函数往day selector添加options
+        for (var i = 1; i <= days; i++) {
+            $("#day").append("<option value=\"" + i + "\">" + i + "</option>");
+        }
+    }
+</script>
+</html>

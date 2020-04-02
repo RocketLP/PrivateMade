@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <bean class="com.pm.www.contorler.BaseServlet" id="baseServlet"></bean>
+    <bean class="com.pm.www.contorler.GoodsServlet" id="goodsServlet"></bean>
+    <bean class="com.pm.www.contorler.GoodTypeServlet" id="goodTypeServlet"></bean>
+    <bean class="com.pm.www.contorler.MemberServlet" id="memberServlet"></bean>
+    <bean class="com.pm.www.contorler.MerchantsServlet" id="merchantsServlet"></bean>
+    <bean class="com.pm.www.contorler.OrderServlet" id="orderServlet"></bean>
+
+    <bean class="com.pm.www.service.impl.GoodsServiceImpl" id="goodsService">
+        <property name="goodsDao" ref="goodsDao"></property>
+    </bean>
+    <bean class="com.pm.www.service.impl.GoodTypeServiceImpl" id="goodTypeService">
+        <property name="goodTypeDao" ref="goodTypeDao"></property>
+    </bean>
+    <bean class="com.pm.www.service.impl.MemberServiceImpl" id="memberService">
+        <property name="memberDao" ref="memberDao"></property>
+    </bean>
+    <bean class="com.pm.www.service.impl.MerchantsServiceImpl" id="merchantsService">
+        <property name="merchantsDao" ref="merchantsDao"></property>
+    </bean>
+    <bean class="com.pm.www.service.impl.OrderServiceImpl" id="orderService">
+        <property name="orderDao" ref="orderDao"></property>
+    </bean>
+
+    <bean class="com.pm.www.dao.impl.GoodsDaoImpl" id="goodsDao"></bean>
+    <bean class="com.pm.www.dao.impl.GoodTypeDaoImpl" id="goodTypeDao"></bean>
+    <bean class="com.pm.www.dao.impl.MemberDaoImpl" id="memberDao"></bean>
+    <bean class="com.pm.www.dao.impl.MerchantsDaoImpl" id="merchantsDao"></bean>
+    <bean class="com.pm.www.dao.impl.OrderDaoImpl" id="orderDao"></bean>
+</beans>

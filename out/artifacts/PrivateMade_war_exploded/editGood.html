@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>商品编辑</title>
+    <link type="text/css" rel="stylesheet" href="css/bootstrap3/bootstrap.css">
+    <style type="text/css">
+        #container {
+            padding-top: 50px;
+            padding-left: 10px;
+        }
+
+        .col-md-12 {
+            margin-top: 20px;
+            width: 100%;
+        }
+
+        .good-image {
+            display: inline-block;
+            position: relative;
+            padding: 30px;
+            border: 1px dashed #e2e2e2;
+            background-color: #fff;
+            text-align: center;
+            cursor: pointer;
+            color: #999;
+        }
+
+        ul {
+            list-style: none;
+            position: relative;
+            left: -13px;
+        }
+
+        textarea {
+            resize: none;
+        }
+
+        .good-new-image, .good-old-image {
+            float: left;
+        }
+
+    </style>
+</head>
+<body>
+<div id="container">
+    <div class="col-md-12">
+        <div class="form-group">
+            <label class="col-sm-1 control-label">商品名：</label>
+            <div class="col-sm-7">
+                <input class="form-control" type="text" placeholder="请输入商品名" id="goodName">
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="form-group">
+            <label class="col-sm-1 control-label">价格：</label>
+            <div class="col-sm-7">
+                <input class="form-control" type="text" placeholder="请输入商品价格" id="goodPrice">
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <label class="col-sm-1 control-label">商品图片：</label>
+        <div class="good-new-image">
+            <input class="file-add" type="file" name="file" accept="image/*" id="goodPhoto"/>
+        </div>
+        <div class="good-old-image"><span>原图片：</span><img width="100px"></div>
+    </div>
+    <div class="col-md-12">
+        <div class="form-group">
+            <label class="col-sm-1 control-label">商品种类：</label>
+            <div class="col-sm-7">
+                <select class="form-control" id="goodType"></select>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="form-group">
+            <label class="col-sm-1 control-label">商品描述：</label>
+            <div class="col-sm-7">
+                <textarea class="form-control" placeholder="请输入文本" id="goodDescribe"></textarea>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="form-group">
+            <label class="col-sm-1 control-label"></label>
+            <div class="col-sm-7">
+                <button type="button" class="btn btn-primary" id="btnEditGood">保存修改</button>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script type="text/javascript" src="js/jquery-3.2.1.js"></script>
+<script type="text/javascript" src="js/layer/layer.js"></script>
+<script type="text/javascript">
+    var url = location.href;
+    var id = url.split("=")[1].split("&")[0];
+    var mcid = url.split("=")[2];
+    $(function () {
+        $.post('queryAllGoodType', function (data) {
+            $.each(data.result, function (index, obj) {
+                var option = $('<option value="' + obj.goodType + '"></option>').text(obj.goodTypeName);
+                $('select').append(option);
+            })
+        }, 'json');
+        $.post('queryGoodById', {
+            gid: id
+        }, function (data) {
+            $('#goodName').val(data.result.goodName);
+            $('#goodPrice').val(data.result.goodPrice);
+            $('#goodDescribe').val(data.result.goodDescribe);
+            $('img').attr('src', 'http://localhost:8080/PrivateMade' + data.result.goodPhoto);
+        }, 'json');
+        $('#btnEditGood').click(function () {
+            var formDate = new FormData();
+            formDate.append("goodName", $('#goodName').val());
+            formDate.append("goodType", $('select').val());
+            formDate.append("goodPrice", $('#goodPrice').val());
+            formDate.append("goodPhoto", $('#goodPhoto')[0].files[0]);
+            formDate.append("goodDescribe", $('#goodDescribe').val());
+            formDate.append("goodId", id);
+            $.ajax({
+                url: 'editGood',
+                data: formDate,
+                dataType: "JSON",
+                type: "POST",
+                processData: false,
+                contentType: false
+            }).done(function (data) {
+                if (data.code == 200) {
+                    layer.msg(data.msg, {icon: 1, time: 2000}, function () {
+                        location.href="displayAllGoods.html?mcid=" + mcid;
+                    });
+                } else {
+                    layer.msg(data.msg);
+                }
+            }).fail(function () {
+
+            })
+        });
+    })
+</script>
+</html>

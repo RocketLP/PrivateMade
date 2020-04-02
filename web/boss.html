@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>主页面</title>
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/reset.css" rel="stylesheet">
+    <style type="text/css">
+        html * {
+            padding: 0;
+            margin: 0;
+            font-family: Arial, Verdana, Helvetica, sans-serif;
+        }
+
+        .nav {
+            margin-top: 0px;
+        }
+
+        .nav * {
+            text-decoration: none;
+            font-size: 9pt;
+        }
+
+        .nav * a:hover {
+            background-color: #82ce18; /* 鼠标经过时的红色背景，可自定义 */
+        }
+
+        .menu {
+            list-style: none;
+            height: 60px;
+            width: 100%;
+            background-color: #1E90FF;
+            margin-top: 0px;
+        }
+
+        .nav {
+            list-style: none;
+            height: 60px;
+            width: 900px;
+            margin: 0 auto;
+            background-color: #1E90FF;
+        }
+
+        .nav li {
+            float: left;
+            position: relative;
+        }
+
+        .nav li a {
+            color: #fff;
+            height: 60px;
+            line-height: 60px;
+            font-size: 15px;
+            font-family: "Adobe 黑体 Std R";
+            padding: 0 20px;
+            blr: expression(this.onFocus=this.close());
+            blr: expression(this.onFocus=this.blur());
+            display: inline-block;
+        }
+
+        .nav li a:focus {
+            -moz-outline-style: none;
+        }
+
+        .nav li .sub-nav {
+            position: absolute;
+            top: 39px;
+            left: -1px;
+            list-style: none;
+            background-color: #1E90FF;
+            display: none;
+        }
+
+        .nav li .sub-nav li {
+            text-align: center;
+            clear: left;
+            width: 140px;
+            height: 60px;
+            line-height: 60px;
+            position: relative;
+        }
+
+        .nav li .sub-nav li a {
+            height: 60px;
+            line-height: 60px;
+            width: 138px;
+            padding: 0;
+            display: inline-block;
+        }
+
+        .empty {
+            width: 350px;
+            height: 60px;
+        }
+
+        .boss-content {
+            width: 1210px;
+            height: 2500px;
+            margin: 0 auto;
+            border: 1px solid black;
+        }
+
+        .find {
+            width: 100%;
+            height: 120px;
+            padding-top: 30px;
+            padding-left: 150px;
+        }
+
+        .find-word {
+            width: 60%;
+            height: 35px;
+            border: 2px solid black;
+            border-top-left-radius: 17.5px;
+            border-bottom-left-radius: 17.5px;
+            font-size: 20px;
+            padding-left: 20px;
+        }
+
+        .find-photo {
+            width: 80px;
+            height: 40px;
+            border-top: 2px solid black;
+            border-right: 2px solid black;
+            border-bottom: 2px solid black;
+            background-color: white;
+            border-top-right-radius: 17.5px;
+            border-bottom-right-radius: 17.5px;
+            background-image: url("img/sousuo.png");
+            background-position: left;
+            background-repeat: no-repeat;
+            background-size: 70px;
+            position: relative;
+            top: 13px;
+            box-sizing: border-box;
+        }
+
+        iframe{
+            width: 100%;
+            height: 2000px;
+            position: relative;
+            top: -19px;
+        }
+    </style>
+</head>
+<body>
+<div id="content">
+    <div class="menu">
+        <ul class="nav">
+            <li  id="boss"><a id="aboss">首页</a>
+            </li>
+            <li><a href="#">定制分类</a>
+                <ul class="sub-nav" id="goodType">
+                </ul>
+            </li>
+            <li class="empty">
+            </li>
+            <li id="memberOrder"><a id="amemberOrder">我的定制</a>
+            </li>
+            <li><a href="#">收藏夹</a>
+            </li>
+            <li id="myselfMessage"><a id="amyselfMessage">会员中心</a>
+            </li>
+        </ul>
+    </div>
+    <div class="boss-content">
+        <div class="find">
+            <input type="text" class="find-word"/><input type="button" class="find-photo"/>
+        </div>
+        <iframe>
+        </iframe>
+    </div>
+</div>
+</body>
+<script src="js/jquery.min.js" type="text/javascript"></script>
+<script src="js/jquery-2.1.1.min.js" type="text/javascript"></script>
+<script src="js/easySlider.js" type="text/javascript"></script>
+<script type="text/javascript">
+    $(function () {
+        var url=location.href;
+        var mid=url.split('=')[1];
+        $('#boss').click(function () {
+            $('#aboss').attr('href',url);
+        });
+        $('iframe').attr('src','goodsDisplay.html?mid='+mid);
+        $(".nav>li").hover(function () {
+            $(this).children('ul').stop(true, true).show(300);
+        }, function () {
+            $(this).children('ul').stop(true, true).hide(300);
+        });
+        $("#slider").easySlider({
+            slideSpeed: 500,
+            paginationSpacing: "15px",
+            paginationDiameter: "12px",
+            paginationPositionFromBottom: "20px",
+            slidesClass: ".slides",
+            controlsClass: ".controls",
+            paginationClass: ".pagination"
+        });
+        $('#memberOrder').click(function () {
+            $('iframe').attr('src','memberOrder.html?mid='+mid);
+        });
+        $('#myselfMessage').click(function () {
+            $('#amyselfMessage').attr('href','myselfPage.html?mid='+mid);
+        })
+    })
+</script>
+</html>

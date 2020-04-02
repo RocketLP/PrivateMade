@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>商家注册</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="css/gloab.css" rel="stylesheet" type="text/css">
+    <link href="css/index.css" rel="stylesheet" type="text/css">
+    <style>
+        .reg-box .intelligent-label {
+            width: 150px;
+            text-align: right;
+            font-size: 14px;
+            color: #666;
+            padding-right: 10px;
+        }
+
+        #emptyleft {
+            display: inline-block;
+            width: 60px;
+        }
+
+        #emptyright {
+            display: inline-block;
+            width: 80px;
+        }
+
+        .empty {
+            display: inline-block;
+            width: 10px;
+        }
+
+        .showpwd {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            background: url("img/hidePwd.png") no-repeat center center;
+            background-size: 16px 16px;
+            position: absolute;
+            top: 8px;
+            right: 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div class="login-box f-mt10 f-pb50">
+    <div class="main bgf">
+        <div class="reg-box-pan display-inline">
+            <div class="reg-box" id="verifyCheck" style="margin-top:20px;">
+                <div class="part1">
+                    <div class="item col-xs-12">
+                        <span class="intelligent-label f-fl"><b class="ftx04">*</b>商家名：</span>
+                        <div class="f-fl item-ifo">
+                            <input name="mcName" type="text" maxlength="20" class="txt03 f-r3 required" tabindex="1"
+                                   id="mcName"/> <span
+                                class="ie8 icon-close close hide"></span>
+                            <label class="icon-sucessfill blank hide"></label>
+                            <label class="focus"><span id="nameSpan">3-20位，中文、字母、数字、下划线的组合，以中文或字母开头</span></label>
+                            <label class="focus valid"></label>
+                        </div>
+                    </div>
+                    <div class="item col-xs-12">
+                        <span class="intelligent-label f-fl"><b class="ftx04">*</b>手机号：</span>
+                        <div class="f-fl item-ifo">
+                            <input name="mcPhone" type="text" class="txt03 f-r3 required" tabindex="2" maxlength="11"
+                                   id="mcPhone"/>
+                            <span class="ie8 icon-close close hide"></span>
+                            <label class="icon-sucessfill blank hide"></label>
+                            <label class="focus"><span id="phoneSpan">请填写11位有效的手机号码</span></label>
+                            <label class="focus valid"></label>
+                        </div>
+                    </div>
+                    <div class="item col-xs-12">
+                        <span class="intelligent-label f-fl"><b class="ftx04">*</b>营业执照注册号：</span>
+                        <div class="f-fl item-ifo">
+                            <input name="mcLicense" type="text" maxlength="20" class="txt03 f-r3 required" tabindex="1"
+                                   id="mcLicense"/> <span
+                                class="ie8 icon-close close hide"></span>
+                            <label class="icon-sucessfill blank hide"></label>
+                            <label class="focus"><span id="licenseSpan">6位首次登记机关码、8位顺序码，1位数字校验码组成</span></label>
+                            <label class="focus valid"></label>
+                        </div>
+                    </div>
+                    <div class="item col-xs-12">
+                        <span class="intelligent-label f-fl"><b class="ftx04">*</b>密码：</span>
+                        <div class="f-fl item-ifo">
+                            <input type="password" id="mcPassword"
+                                   class="txt03 f-r3 required" tabindex="3"
+                                   style="ime-mode:disabled;"/>
+                            <span class="ie8 icon-close close hide" style="right:55px"></span>
+                            <span class="showpwd" data-eye="password"></span>
+                            <label class="icon-sucessfill blank hide"></label>
+                            <label class="focus"><span id="passwordSpan">6-20位英文（区分大小写）、数字、字符的组合</span></label>
+                            <label class="focus valid"></label>
+                            <span class="clearfix"></span>
+                            <label class="strength">
+                                <span class="f-fl f-size12">安全程度：</span>
+                                <b><i>弱</i><i>中</i><i>强</i></b>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="item col-xs-12">
+                        <span class="intelligent-label f-fl"><b class="ftx04">*</b>确认密码：</span>
+                        <div class="f-fl item-ifo">
+                            <input type="password" class="txt03 f-r3 required" tabindex="4"
+                                   style="ime-mode:disabled;" id="reMcPassword"/>
+                            <span class="ie8 icon-close close hide" style="right:55px"></span>
+                            <span class="showpwd" data-eye="rePassword"></span>
+                            <label class="icon-sucessfill blank hide"></label>
+                            <label class="focus"><span id="rePasswordSpan">请再输入一遍上面的密码</span></label>
+                            <label class="focus valid"></label>
+                        </div>
+                    </div>
+                    <div class="item col-xs-12" style="height:auto">
+                        <span class="intelligent-label f-fl">&nbsp;</span>
+                        <p class="f-size14 required" data-valid="isChecked" data-error="请先同意条款">
+                            <input type="checkbox" checked/><a href="javascript:showoutc();" class="f-ml5">我已阅读并同意条款</a>
+                        </p>
+                        <label class="focus valid"></label>
+                    </div>
+                    <div class="item col-xs-12">
+                        <span class="intelligent-label f-fl">&nbsp;</span>
+                        <div class="f-fl item-ifo">
+                            <button class="btn btn-blue f-r3" id="btnRegister">注册</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="m-sPopBg" style="z-index:998;"></div>
+<div class="m-sPopCon regcon">
+    <div class="m-sPopTitle"><strong>服务协议条款</strong><b id="sPopClose" class="m-sPopClose" onClick="closeClause()">×</b>
+    </div>
+    <div class="apply_up_content">
+    	<pre class="f-r0">
+		<strong>同意以下服务条款，提交注册信息</strong>
+        </pre>
+    </div>
+    <center><a class="btn btn-blue btn-lg f-size12 b-b0 b-l0 b-t0 b-r0 f-pl50 f-pr50 f-r3"
+               href="javascript:closeClause();">已阅读并同意此条款</a></center>
+</div>
+</body>
+<script src="js/jquery-3.2.1.js" type="text/javascript"></script>
+<script src="js/layer/layer.js" type="text/javascript"></script>
+<script type="text/javascript">
+    $(function () {
+        var account;
+        var password;
+        var phone;
+        var license;
+        var isLicenseRight = false;
+        var isAccountRight = false;
+        var isPasswordRight = false;
+        var isPhoneRight = false;
+        var isRePassword = false;
+        $('#mcName').blur(function () {
+            account = $("#mcName").val();
+            $.post('queryByMcName', {
+                mcName: account
+            }, function (data) {
+                if (data.code == 200) {
+                    var regAccount = /^[a-zA-Z][a-zA-Z0-9_]{4,15}$/;
+                    if (regAccount.test(account)) {
+                        $('#nameSpan').text("格式正确");
+                        $('#nameSpan').css('color', 'green');
+                        isAccountRight = true;
+                    } else {
+                        $('#nameSpan').text("格式错误");
+                        $('#nameSpan').css('color', 'red');
+                        isAccountRight = false;
+                    }
+                } else {
+                    layer.msg(data.msg1);
+                }
+            }, "json");
+        })
+
+        $('#mcPassword').blur(function () {
+            password = $("#mcPassword").val();
+            var regPassword = /^[a-zA-Z]\w{5,17}$/;
+            if (regPassword.test(password)) {
+                $('#passwordSpan').text("格式正确");
+                $('#passwordSpan').css('color', 'green');
+                isPasswordRight = true;
+            } else {
+                $('#passwordSpan').text("格式错误");
+                $('#passwordSpan').css('color', 'red');
+                isPasswordRight = false;
+            }
+        })
+        $('#reMcPassword').blur(function () {
+            var rePassword = $('#reMcPassword').val();
+            if (rePassword == password) {
+                $('#rePasswordSpan').text("一致");
+                $('#rePasswordSpan').css('color', 'green');
+                isRePassword = true;
+            } else {
+                $('#rePasswordSpan').text("不一致");
+                $('#rePasswordSpan').css('color', 'red');
+                isRePassword = false;
+            }
+        })
+        $('#mcPhone').blur(function () {
+            phone = $('#mcPhone').val();
+            var regPhone = /^1[3|4|5|6|7|8|9]\d{9}$|(^09\d{8}$)/;
+            if (regPhone.test(phone)) {
+                $('#phoneSpan').text("格式正确");
+                $('#phoneSpan').css('color', 'green');
+                isPhoneRight = true;
+            } else {
+                $('#phoneSpan').text("格式错误");
+                $('#phoneSpan').css('color', 'red');
+                isPhoneRight = false;
+            }
+        })
+        $('#mcLicense').blur(function () {
+            license = $('#mcLicense').val();
+            var regLicense = /[1-9A-GY]{1}[1239]{1}[1-5]{1}[0-9]{5}[0-9A-Z]{10}$|[1-9A-GY]{1}[1239]{1}[1-5]{1}[0-9]{5}[0-9A-Z]{10}-[0-9]{2}$/;
+            if (regLicense.test(license)) {
+                $('#licenseSpan').text("格式正确");
+                $('#licenseSpan').css('color', 'green');
+                isLicenseRight = true;
+            } else {
+                $('#licenseSpan').text("格式错误");
+                $('#licenseSpan').css('color', 'red');
+                isLicenseRight = false;
+            }
+        })
+        $('#btnRegister').click(function () {
+            if (isAccountRight&&isPhoneRight&&isPasswordRight&&isRePassword&&isLicenseRight){
+                $.post('mcRegister',{
+                    mcName:account,
+                    mcPhone:phone,
+                    mcPassword:password,
+                    mcLicense:license
+                },function (data) {
+                    if (data.code==200){
+                        layer.msg(data.msg,{icon:1,time:1000},function () {
+                            location.href="mcRegisterGoto.html";
+                        });
+                    } else {
+                        layer.msg(data.msg());
+                    }
+                },'json');
+            } else {
+                layer.msg('信息填写错误');
+            }
+        })
+
+    })
+</script>
+</html>

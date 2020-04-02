@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>添加商品种类</title>
+    <link type="text/css" rel="stylesheet" href="css/bootstrap.css">
+    <style type="text/css">
+        #content{
+            width: 100%;
+        }
+        ul {
+            list-style: none;
+        }
+
+        ul li {
+            float: left;
+            width: 100px;
+            height: 20px;
+        }
+
+        #action{
+            width: 50%;
+            margin: 100px auto;
+        }
+    </style>
+</head>
+<body>
+<h2>现有商品种类</h2>
+<div id="content">
+    <ul id="displayGoodType"></ul>
+</div>
+<div id="action"><button type="button" id="addGoodType" class="btn btn-info">添加</button></div>
+</body>
+<script type="text/javascript" src="js/jquery-3.2.1.js"></script>
+<script type="text/javascript" src="js/layer/layer.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $.post('queryAllGoodType', function (data) {
+            $.each(data.result, function (index, obj) {
+                var li = $('<li></li>').text(obj.goodTypeName);
+                $('ul').append(li);
+            });
+        }, 'json');
+        $('#addGoodType').click(function () {
+            var input = $('<input class="form-control" id="goodTypeName" placeholder="请输入商品类别"/>');
+            var button = $('<button class="btn btn-info" type="button" id="btnAdd">添加</button>');
+            $('#action').append(input).append(button);
+            $('#addGoodType').remove();
+            $('#btnAdd').click(function () {
+                var goodTypeName = $('#goodTypeName').val();
+                var test = 1;
+                $.post('queryAllGoodType', function (data) {
+                    $.each(data.result, function (index, obj) {
+                        if (goodTypeName == obj.goodTypeName) {
+                            test = -1;
+                            layer.msg('已有该类别');
+                        } else if ('' == goodTypeName) {
+                            test = -1;
+                            layer.msg('您还没有输入');
+                        }
+                    });
+                    if (test == 1) {
+                        $.post('addGoodType', {
+                            goodTypeName: goodTypeName
+                        }, function (data) {
+                            console.log(data);
+                            if (data == 1) {
+                                layer.msg('添加成功');
+                                location.reload();
+                            } else {
+                                layer.msg('添加失败');
+                            }
+                        }, 'text');
+                    }
+                }, 'json');
+
+            })
+        });
+    })
+</script>
+</html>

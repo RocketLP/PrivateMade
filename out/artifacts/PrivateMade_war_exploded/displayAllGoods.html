@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>商品展示</title>
+    <link href="css/bootstrap3/bootstrap.css" rel="stylesheet">
+</head>
+<body>
+<table class="table table-hover">
+    <caption>商品表</caption>
+    <thead>
+    <tr>
+        <th>商品名</th>
+        <th>商品种类</th>
+        <th>商品图片</th>
+        <th>商品描述</th>
+        <th>商品价格</th>
+        <th>商品创建时间</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    
+    </tbody>
+</table>
+</body>
+<script src="js/jquery-3.2.1.js" type="text/javascript"></script>
+<script src="js/layer/layer.js" type="text/javascript"></script>
+<script type="text/javascript">
+    var url=location.href;
+    var id=url.split("=")[1];
+    $(function () {
+        $.post('queryAllGoodsByMcid',{
+            mcid:id
+        },function (data) {
+            if (data.code==200){
+                $.each(data.result,function (index,obj) {
+                    var tr=$('<tr></tr>');
+                    var td1=$('<td></td>').text(obj.goodName);
+                    var td2=$('<td></td>').text(obj.goodTypeName);
+                    var td3=$('<td></td>');
+                    var img = $('<img width="100">').attr('src', 'http://localhost:8080/PrivateMade' + obj.goodPhoto);
+                    td3.append(img);
+                    var td4=$('<td></td>').text(obj.goodDescribe);
+                    td4.attr('width','300px');
+                    var td5=$('<td></td>').text(obj.goodPrice);
+                    var td6=$('<td></td>').text(obj.goodCreateTime);
+                    var td7=$('<td></td>');
+                    var edit=$('<a href="#" onclick="edit('+obj.goodid+')" ></a>').text('编辑');
+                    var span=$('<span></span>').html('&nbsp&nbsp&nbsp&nbsp&nbsp');
+                    var dele=$('<a href="#" onclick="del('+obj.goodid+',this)" ></a>').text('删除');
+                    td7.append(edit).append(span).append(dele);
+                    tr.append(td1).append(td2).append(td3).append(td4).append(td5).append(td6).append(td7);
+                    $('tbody').append(tr);
+                })
+            }else {
+                layer.msg(data.msg);
+            }
+        },"json");
+    })
+    function edit(gid) {
+        /*$(window.parent.document).find('iframe').attr('src','editGood.html?gid='+gid+'&mcid='+id);*/
+        location.href="editGood.html?gid="+gid+"&mcid="+id;
+    }
+    function del(gid, obj) {
+        layer.confirm('确认删除', {icon: 3, title: '删除提示'}, function (index) {
+            $.post('deleteGood', {gid: gid}, function (data) {
+                if (data.code == 200) {
+                    layer.msg(data.msg, {icon: 1, time: 2000}, function () {
+                        $(obj).parent().parent().remove();
+                    });
+                } else {
+                    layer.msg(data.msg);
+                }
+            }, "json");
+            layer.close(index);
+        });
+    }
+</script>
+</html>

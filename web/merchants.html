@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>商家</title>
+    <link rel="stylesheet" type="text/css" href="css/merchants/nav.css">
+    <link rel="stylesheet" type="text/css" href="fonts/merchants/iconfont.css">
+    <style type="text/css">
+        iframe {
+            position: absolute;
+            right: 0px;
+            top: 50px;
+            width: 1312px;
+            height: 92%;
+            background: url("img/background1.jpg") no-repeat center;
+            background-size: cover;
+        }
+        a{
+            cursor: pointer;
+        }
+        #head{
+            width: 1315px;
+            height: 50px;
+            position: absolute;
+            top: 0;
+            right: 0;
+            background-color: black;
+            font-family: 微软雅黑;
+            font-size: 25px;
+            color: white;
+            line-height: 50px;
+            text-align: center;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<div class="nav">
+    <div class="nav-top">
+        <div style="border-bottom:1px solid rgba(255,255,255,.1)"><img src="images/mini.png"></div>
+    </div>
+    <ul>
+        <li class="nav-item">
+            <a href="javascript:;"><i class="my-icon nav-icon icon_1"></i><span>商品管理</span><i
+                    class="my-icon nav-more"></i></a>
+            <ul>
+                <li><a id="add"><span>添加商品</span></a></li>
+                <li><a id="display"><span>所有商品</span></a></li>
+                <li><a id="addGoodType"><span>添加商品种类</span></a></li>
+            </ul>
+        </li>
+        <li class="nav-item">
+            <a href="javascript:;"><i class="my-icon nav-icon icon_2"></i><span>订单管理</span><i
+                    class="my-icon nav-more"></i></a>
+            <ul>
+                <li><a id="order"><span>待处理订单</span></a></li>
+                <li><a id="orderDo"><span>待完成订单</span></a></li>
+                <li><a id="orderFinish"><span>已完成订单</span></a></li>
+            </ul>
+        </li>
+    </ul>
+    <div id="head">
+        欢迎您!&nbsp&nbsp<span id="merchantsName"></span>
+    </div>
+    <iframe>
+    </iframe>
+</div>
+
+</body>
+<script type="text/javascript" src="js/merchants/jquery.min.js"></script>
+<script type="text/javascript" src="js/merchants/nav.js"></script>
+<script type="text/javascript" src="js/layer/layer.js"></script>
+<script type="text/javascript" src="js/jquery-3.2.1.js"></script>
+<script type="text/javascript">
+    $(function () {
+        var url=location.href;
+        var id = url.split("=")[1];
+        $('#add').click(function () {
+            $('iframe').removeAttr('src');
+            $('iframe').attr('src','addGoods.html?mcid='+id);
+        });
+        $('#display').click(function () {
+            $('iframe').removeAttr('src');
+            $('iframe').attr('src','displayAllGoods.html?mcid='+id);
+        });
+        $('#order').click(function () {
+            $('iframe').removeAttr('src');
+            $('iframe').attr('src','orderManager.html?mcid='+id);
+        });
+        $('#orderDo').click(function () {
+            $('iframe').removeAttr('src');
+            $('iframe').attr('src','orderFinish.html?mcid='+id);
+        });
+        $.post('queryMerchantsNameById',{
+            merchantsId:id
+        },function (data) {
+            $('#merchantsName').text(data.result);
+        },'json');
+        $('#addGoodType').click(function () {
+            $('iframe').removeAttr('src');
+            $('iframe').attr('src','addGoodType.html?mcid='+id);
+        });
+        $('#orderFinish').click(function () {
+            $('iframe').removeAttr('src');
+            $('iframe').attr('src','orderFinished.html?mcid='+id);
+        });
+    })
+</script>
+</html>
